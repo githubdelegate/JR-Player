@@ -22,4 +22,8 @@
 // ---
 - (void)openSlidView:(void(^)())action;
 
+- (void)closeAllImgArray;
+
+- (void)addControlBtn;
+
 @end

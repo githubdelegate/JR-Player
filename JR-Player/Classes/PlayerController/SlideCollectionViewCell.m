@@ -61,7 +61,12 @@
 	self.timeLabel.hidden = NO;
 	
 	self.imageView.image = model.image;
-	self.timeLabel.text  = [NSString stringWithFormat:@"%zd", model.time.value / model.time.timescale];
+//	self.timeLabel.text  = [NSString stringWithFormat:@"%zd", model.time.value / model.time.timescale];
+}
+
+- (void)setTimeString:(NSString *)timeString {
+	_timeString = timeString;
+	self.timeLabel.text = timeString;
 }
 
 @end

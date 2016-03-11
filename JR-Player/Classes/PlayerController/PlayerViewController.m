@@ -20,12 +20,18 @@
     [super viewDidLoad];
 
 	self.view.backgroundColor = [UIColor whiteColor];
-	self.player = [[JRPlayerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, CELL_H)
+	
+	// status
+	UIView *statusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_W, 20)];
+	statusView.backgroundColor = [UIColor blackColor];
+	[self.view addSubview:statusView];
+	
+	self.player = [[JRPlayerView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_W, CELL_H)
 												asset:self.video[@"video"]];
 	self.player.title = self.video[@"title"];
 	[self.view addSubview:self.player];
 	self.player.smallControlView.delegate = self;
-
+	
 	// 设置屏幕方向
 	[self interfaceOrientation:UIInterfaceOrientationPortrait];
 }
@@ -52,6 +58,7 @@
 #pragma mark - Controller Methond
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	
 	self.navigationController.navigationBarHidden = YES;
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 	//开启ios右滑返回
@@ -72,7 +79,12 @@
 	[super viewWillLayoutSubviews];
 
 	CGFloat playerH = self.view.bounds.size.width * 9 / 16;
-	self.player.frame = CGRectMake(0, 0, self.view.bounds.size.width, playerH);
+
+	if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
+		self.player.frame = CGRectMake(0, 20, self.view.bounds.size.width, playerH);
+	} else {
+		self.player.frame = CGRectMake(0, 0, self.view.bounds.size.width, playerH);
+	}
 	
 }
 

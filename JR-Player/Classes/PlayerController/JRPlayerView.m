@@ -23,7 +23,9 @@
 @end
 
 #define STATUS_KEYPATH @"status"
+#define RATE_KEYPATH @"rate"
 static const NSString *PlayerItemStatusContext;
+static const NSString *PlayerItemRateContext;
 @implementation JRPlayerView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -114,6 +116,11 @@ static const NSString *PlayerItemStatusContext;
 	// 4. 创建播放对象
 	self.player		= [AVPlayer playerWithPlayerItem:self.playerItem];      // 4
 	
+	[self.player addObserver:self
+				  forKeyPath:RATE_KEYPATH
+					 options:0
+					 context:&PlayerItemRateContext];
+	
 	// 5. 添加到 View
 	[(AVPlayerLayer *) [self layer] setPlayer:self.player];
 	
@@ -130,10 +137,17 @@ static const NSString *PlayerItemStatusContext;
 						change:(NSDictionary *)change
 					   context:(void *)context {
 	
+	NSLog(@"notifacation: %@   %@", keyPath, change);
+	
 	if ([change[@"kind"] isEqualToNumber:[NSNumber numberWithInteger:1]]) {
 		
 		if (self.imageLayer) {
 			[self.imageLayer removeFromSuperlayer];
+		}
+		
+		if (self.smallControlView) {
+			[self.smallControlView addControlBtn];
+			NSLog(@"===============xxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		}
 	}
 	[self updateControlView];
@@ -142,12 +156,12 @@ static const NSString *PlayerItemStatusContext;
 - (void)setView {
 	
 	// 1. 播放控制
-	self.playControl = [UIButton buttonWithType:UIButtonTypeContactAdd];
-	self.playControl = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-	[self.playControl setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-	[self.playControl setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateHighlighted];
-	[self addSubview:self.playControl];
-	[self.playControl addTarget:self action:@selector(playCont) forControlEvents:UIControlEventTouchUpInside];
+//	self.playControl = [UIButton buttonWithType:UIButtonTypeContactAdd];
+//	self.playControl = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+//	[self.playControl setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+//	[self.playControl setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateHighlighted];
+//	[self addSubview:self.playControl];
+//	[self.playControl addTarget:self action:@selector(playCont) forControlEvents:UIControlEventTouchUpInside];
 	
 	// 2. 菊花
 	self.activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
@@ -204,8 +218,10 @@ static const NSString *PlayerItemStatusContext;
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+
 	if ([NSStringFromClass([touch.view class]) isEqualToString:@"UIImageView"]
-		|| [NSStringFromClass([touch.view class]) isEqualToString:@"UIView"]) {
+		|| [NSStringFromClass([touch.view class]) isEqualToString:@"UIView"]
+		|| [NSStringFromClass([touch.view class]) isEqualToString:@"UISlider"]) {
 		return NO;
 	}
 	return YES;
@@ -267,6 +283,7 @@ static const NSString *PlayerItemStatusContext;
 					self.smallAppear = NO;
 				}];
 			}
+			[self.smallControlView closeAllImgArray];
 		}
 	}
 }
@@ -300,6 +317,7 @@ static const NSString *PlayerItemStatusContext;
 
 - (void)play {
 	[self.player play];
+	NSLog(@"--------------------------------------------------------------------");
 }
 
 - (void)pause {
@@ -308,6 +326,7 @@ static const NSString *PlayerItemStatusContext;
 
 - (void)dealloc {
 	[self.playerItem removeObserver:self forKeyPath:STATUS_KEYPATH];
+	[self.player removeObserver:self forKeyPath:RATE_KEYPATH];
 }
 
 + (Class)layerClass {                                                       // 2

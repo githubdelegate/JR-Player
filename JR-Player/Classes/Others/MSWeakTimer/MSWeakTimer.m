@@ -51,12 +51,14 @@
                   selector:(SEL)selector
                   userInfo:(id)userInfo
                    repeats:(BOOL)repeats
-             dispatchQueue:(dispatch_queue_t)dispatchQueue
-{
+             dispatchQueue:(dispatch_queue_t)dispatchQueue {
+	
+	// 断言
     NSParameterAssert(target);
     NSParameterAssert(selector);
     NSParameterAssert(dispatchQueue);
 
+	// 初始化
     if ((self = [super init]))
     {
         self.timeInterval = timeInterval;
@@ -65,8 +67,10 @@
         self.userInfo = userInfo;
         self.repeats = repeats;
 
+		// 创建 穿行队列
         NSString *privateQueueName = [NSString stringWithFormat:@"com.mindsnacks.msweaktimer.%p", self];
         self.privateSerialQueue = dispatch_queue_create([privateQueueName cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
+		// 设置队列优先级  (既将第一个queue的优先级和第二个queue的优先级设置一样。)
         dispatch_set_target_queue(self.privateSerialQueue, dispatchQueue);
 
         self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER,
@@ -78,8 +82,8 @@
     return self;
 }
 
-- (id)init
-{
+- (id)init {
+
     return [self initWithTimeInterval:0
                                target:nil
                              selector:NULL
@@ -93,8 +97,8 @@
                                       selector:(SEL)selector
                                       userInfo:(id)userInfo
                                        repeats:(BOOL)repeats
-                                 dispatchQueue:(dispatch_queue_t)dispatchQueue
-{
+                                 dispatchQueue:(dispatch_queue_t)dispatchQueue {
+
     MSWeakTimer *timer = [[self alloc] initWithTimeInterval:timeInterval
                                                      target:target
                                                    selector:selector
@@ -150,11 +154,12 @@
     }
 }
 
-- (void)resetTimerProperties
-{
-    int64_t intervalInNanoseconds = (int64_t)(self.timeInterval * NSEC_PER_SEC);
-    int64_t toleranceInNanoseconds = (int64_t)(self.tolerance * NSEC_PER_SEC);
+- (void)resetTimerProperties {
 
+    int64_t intervalInNanoseconds = (int64_t)(self.timeInterval * NSEC_PER_SEC);	// Loop Time
+    int64_t toleranceInNanoseconds = (int64_t)(self.tolerance * NSEC_PER_SEC);		// Totle Time
+
+	// 创建 源
     dispatch_source_set_timer(self.timer,
                               dispatch_time(DISPATCH_TIME_NOW, intervalInNanoseconds),
                               (uint64_t)intervalInNanoseconds,
@@ -162,8 +167,8 @@
                               );
 }
 
-- (void)schedule
-{
+- (void)schedule {
+
     [self resetTimerProperties];
 
     __weak MSWeakTimer *weakSelf = self;
@@ -172,6 +177,7 @@
         [weakSelf timerFired];
     });
 
+	// 开始执行
     dispatch_resume(self.timer);
 }
 
@@ -203,6 +209,7 @@
     }
 
     // We're not worried about this warning because the selector we're calling doesn't return a +1 object.
+	//
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [self.target performSelector:self.selector withObject:self];

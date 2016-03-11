@@ -19,5 +19,6 @@
 
 
 @interface SlideCollectionViewCell : UICollectionViewCell
-@property (nonatomic, strong) SlideModel *model;
+@property (nonatomic, strong) SlideModel	*model;
+@property (nonatomic, strong) NSString		*timeString;
 @end
