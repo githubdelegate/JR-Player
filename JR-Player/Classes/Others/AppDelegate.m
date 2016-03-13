@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "LoaclViewController.h"
+#import "LiveViewController.h"
+#import "JRSoundView.h"
 
 @interface AppDelegate ()
 
@@ -18,15 +21,39 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	
 	[self setWindow];
+	[JRSoundView sharedSoundView];
 	return YES;
 }
 
 #pragma mark -
 - (void)setWindow {
 	self.window					= [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	
+	// 1.
 	ViewController *viewVC		= [[ViewController alloc] init];
 	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewVC];
-	self.window.rootViewController = nav;
+	
+	// 2.
+	LoaclViewController *localVC = [[LoaclViewController alloc] init];
+	UINavigationController *locNav = [[UINavigationController alloc] initWithRootViewController:localVC];
+	locNav.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemHistory tag:0];
+	
+	ViewController *netVC = [[ViewController alloc] init];
+	UINavigationController *netNav = [[UINavigationController alloc] initWithRootViewController:netVC];
+	netNav.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:1];
+	
+	LiveViewController *livVC = [[LiveViewController alloc] init];
+	UINavigationController *livNav = [[UINavigationController alloc] initWithRootViewController:livVC];
+	livNav.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMore tag:2];
+	
+	UITabBarController *tabController = [[UITabBarController alloc] init];
+//	tabController.childViewControllers = @[locNav, netNav, livNav];
+	[tabController setViewControllers:@[locNav, netNav, livNav]];
+//	[tabController addChildViewController:locNav];
+//	[tabController addChildViewController:netNav];
+//	[tabController addChildViewController:livNav];
+	
+	self.window.rootViewController = tabController;
 	[self.window makeKeyAndVisible];
 }
 

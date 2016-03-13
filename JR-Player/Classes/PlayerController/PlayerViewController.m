@@ -49,7 +49,7 @@
 
 - (void)closeFullScreen {
 	if (self.player.fullControlView) {
-		[self.player getPortraitScreen];
+//		[self.player getPortraitScreen];
 		[self changeStatusOrientation:UIInterfaceOrientationPortrait];
 		self.navigationController.navigationBar.hidden = NO;
 	}
@@ -144,19 +144,19 @@
 	UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
 	
 	if (orientation == UIDeviceOrientationLandscapeRight) {						// 右全屏
-		[self.player getRightScreen];
+//		[self.player getRightScreen];
 		[self changeStatusOrientation:UIInterfaceOrientationLandscapeLeft];
 		[self interfaceOrientation:UIInterfaceOrientationLandscapeLeft];
 		self.navigationController.navigationBar.hidden = YES;
 	}
 	if (orientation == UIDeviceOrientationLandscapeLeft) {						// 左全屏
-		[self.player getLeftScreen];
+//		[self.player getLeftScreen];
 		[self changeStatusOrientation:UIInterfaceOrientationLandscapeRight];
 		[self interfaceOrientation:UIInterfaceOrientationLandscapeRight];
 		self.navigationController.navigationBar.hidden = YES;
 	}
 	if (orientation == UIDeviceOrientationPortrait){							// 竖屏
-		[self.player getPortraitScreen];
+//		[self.player getPortraitScreen];
 		[self changeStatusOrientation:UIInterfaceOrientationPortrait];
 		self.navigationController.navigationBar.hidden = NO;
 		[self interfaceOrientation:UIInterfaceOrientationPortrait];

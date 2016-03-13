@@ -14,7 +14,7 @@
 #define MARGIN		5
 #define BAR_H		30
 #define LABEL_H		20
-#define LABEL_W		55
+#define LABEL_W		45
 #define CHOOSE		30
 
 #define HEAD_H		40
@@ -26,7 +26,6 @@
 
 #define CONT_BTN	5
 
-//#define barY		(self.bounds.size.height - MARGIN - BAR_H)
 
 @interface JRControlView () <UICollectionViewDelegate, UICollectionViewDataSource>
 // --- View
@@ -86,7 +85,7 @@
 		});
 		
 		self.playBtn = ({
-			UIButton *playBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+			UIButton *playBtn = [[UIButton alloc] init];
 			[playBtn setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
 			[playBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateSelected];
 			[playBtn addTarget:self action:@selector(playControl) forControlEvents:UIControlEventTouchUpInside];
@@ -95,7 +94,7 @@
 		});
 		self.currentTime = ({
 			UILabel *label	= [[UILabel alloc] init];
-			label.font		= [UIFont systemFontOfSize:12];
+			label.font		= [UIFont systemFontOfSize:10];
 			label.textAlignment = NSTextAlignmentCenter;
 			[label setTextColor:[UIColor whiteColor]];
 			[self addSubview:label];
@@ -113,7 +112,7 @@
 		});
 		self.totleTime = ({
 			UILabel *label	= [[UILabel alloc] init];
-			label.font		= [UIFont systemFontOfSize:12];
+			label.font		= [UIFont systemFontOfSize:10];
 			label.textAlignment = NSTextAlignmentCenter;
 			[label setTextColor:[UIColor whiteColor]];
 			[self addSubview:label];
@@ -158,17 +157,17 @@
 		});
 		self.slidBtn = ({
 			UIButton *slidBtn = [[UIButton alloc] init];
-//			[slidBtn setImage:[UIImage imageNamed:@"tab_poster_nav_n"] forState:UIControlStateNormal];
+			//			[slidBtn setImage:[UIImage imageNamed:@"tab_poster_nav_n"] forState:UIControlStateNormal];
 			[slidBtn setTitle:@"slide" forState:UIControlStateNormal];
 			[slidBtn addTarget:self action:@selector(openSlidView) forControlEvents:UIControlEventTouchUpInside];
 			[self.headerView addSubview:slidBtn];
 			slidBtn;
 		});
-
-		[self addTimer];
-//		[self addControlBtn];
-		[self addNSNotificationCenter];
 		
+		[self addTimer];
+		//		[self addControlBtn];
+		[self addNSNotificationCenter];
+//		[self addPanGesture];
 	}
 	return self;
 }
@@ -176,18 +175,19 @@
 #pragma mark - Controller Methond
 - (void)layoutSubviews {
 	[super layoutSubviews];
-
+	
 	// 0. |c|s|t|y|
 	CGRect frame = self.bounds;
 	CGFloat barY = frame.size.height - BAR_H;
 	// 1. playBtn
-	self.playBtn.center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
+	//	self.playBtn.center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
+	self.playBtn.frame = CGRectMake(MARGIN, barY, CHOOSE, CHOOSE);
 	// 2. currentTime
-	CGFloat curX = MARGIN;
+	CGFloat curX = CGRectGetMaxX(self.playBtn.frame) + MARGIN;
 	self.currentTime.frame = CGRectMake(curX, barY + MARGIN, LABEL_W, LABEL_H);
 	// 3. sliderView
 	curX = CGRectGetMaxX(self.currentTime.frame) + MARGIN;
-	CGFloat slidW = self.bounds.size.width - MARGIN * 5 - 30 - LABEL_W * 2;
+	CGFloat slidW = self.bounds.size.width - MARGIN * 6 - 30 - LABEL_W * 2 - CHOOSE;
 	self.sliderView.frame = CGRectMake(curX, barY + MARGIN, slidW, LABEL_H);
 	// 4. totleTime
 	curX = CGRectGetMaxX(self.sliderView.frame) + MARGIN;
@@ -216,7 +216,6 @@
 		self.collectionView.hidden = YES;
 		[self hiddenAllBtn];
 	}
-	NSLog(@"--------------::: %@", NSStringFromCGRect(self.bounds));
 }
 
 - (void)dealloc {
@@ -276,7 +275,7 @@
 }
 
 - (void)openSlidView:(void(^)())action {
-
+	
 	[self createSlideView];
 	NSLog(@"=========================== CLOSE");
 	if (self.isShow == NO) {
@@ -300,8 +299,8 @@
 
 - (void)createSlideView {
 	if (self.collectionView) return;
-
-//	self.imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:self.player.asset];
+	
+	//	self.imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:self.player.asset];
 	self.imageGenerator.maximumSize = CGSizeMake(200.0f, 0.0f);             // 2
 	
 	CMTime duration = self.player.asset.duration;
@@ -349,7 +348,7 @@
 	
 	self.collectionView = ({
 		UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, COLL_Y, self.bounds.size.width, COLL_H)
-														  collectionViewLayout:self.layout];
+															  collectionViewLayout:self.layout];
 		
 		collectionView.dataSource = self;
 		collectionView.delegate   = self;
@@ -368,6 +367,21 @@
 	if (self.titleLabel) {
 		self.titleLabel.text = title;
 	}
+}
+
+#pragma mark - PAN
+
+- (void)addPanGesture {
+	UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self
+																		  action:@selector(panAction:)];
+	
+	[self addGestureRecognizer:pan];
+}
+
+- (void)panAction:(UIPanGestureRecognizer *)gesture {
+	
+	NSLog(@"==================== %@", [gesture class]);
+	
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -391,7 +405,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
+	
 	if (self.imagesArray.count == SLID_C) {
 		CMTime time = [self.imagesArray[indexPath.row] time];
 		[self.player.player seekToTime:time];
@@ -415,10 +429,10 @@
 	__weak JRControlView *weakSelf = self;                             // 1
 	void (^callback)(NSNotification *note) = ^(NSNotification *notification) {
 		[weakSelf.player.player seekToTime:kCMTimeZero                             // 2
-				  completionHandler:^(BOOL finished) {
-					  [weakSelf.player pause];
-					  weakSelf.playBtn.selected = NO;
-				  }];
+						 completionHandler:^(BOOL finished) {
+							 [weakSelf.player pause];
+							 weakSelf.playBtn.selected = NO;
+						 }];
 	};
 	
 	self.itemEndObserver =                                                  // 4
@@ -434,8 +448,10 @@
 	NSString *name = AVPlayerItemPlaybackStalledNotification;
 	NSOperationQueue *queue = [NSOperationQueue mainQueue];
 	
+	__weak JRControlView *weakSelf = self;
 	void (^callback)(NSNotification *note) = ^(NSNotification *notification) {
-		NSLog(@"==================================|||||||||||||||||||||||||||||||||||");
+		NSLog(@"=========================AAAAAAAAAAAAAAAAA");
+		weakSelf.playBtn.selected = NO;
 	};
 	
 	self.itemEndObserver2 =                                                  // 4
@@ -451,7 +467,7 @@
 	NSOperationQueue *queue = [NSOperationQueue mainQueue];
 	
 	void (^callback)(NSNotification *note) = ^(NSNotification *notification) {
-		NSLog(@"==================================|||AVPlayerItemTimeJumpedNotification");
+		NSLog(@"===========|||AVPlayerItemTimeJumpedNotification  %@", notification.userInfo);
 	};
 	
 	self.itemEndObserver4 =                                                  // 4
@@ -503,7 +519,7 @@
 }
 
 - (void)slideOver {
-
+	
 	if (!self.player.player || self.player.player.status == AVPlayerStatusUnknown) return;
 	
 	CMTime time2		= self.player.playerItem.duration;
@@ -529,16 +545,16 @@
 		btn.tag = i;
 		btn.userInteractionEnabled = NO;
 		[self.btnArray addObject:btn];
-//		[self.sliderView insertSubview:btn atIndex:0];		// 1.
+		//		[self.sliderView insertSubview:btn atIndex:0];		// 1.
 		[self addSubview:btn];								// 2.
 		[btn setImage:[UIImage imageNamed:@"slider_tip"] forState:UIControlStateNormal];
 		[btn addTarget:self action:@selector(btnSelected:) forControlEvents:UIControlEventTouchUpInside];
-
+		
 		UIButton *img	= [[UIButton alloc] init];
 		img.hidden		= YES;
 		img.tag			= i;
 		[self addSubview:img];
-//		[img setImage:[UIImage imageWithCGImage:image] forState:UIControlStateNormal];
+		//		[img setImage:[UIImage imageWithCGImage:image] forState:UIControlStateNormal];
 		[img addTarget:self action:@selector(imgDidselected:) forControlEvents:UIControlEventTouchUpInside];
 		img.backgroundColor = [UIColor blackColor];
 		[self.imgArray addObject:img];
@@ -562,7 +578,6 @@
 		CMTime time = CMTimeMake((int64_t)t, 1);
 		[self.timArray addObject:[NSValue valueWithCMTime:time]];
 	}
-
 	__block NSInteger count = 0;
 	AVAssetImageGeneratorCompletionHandler handler;
 	handler = ^(CMTime requestedTime,
@@ -573,7 +588,6 @@
 		
 		if (result == AVAssetImageGeneratorSucceeded) {                     // 6
 			UIImage *image = [UIImage imageWithCGImage:imageRef];
-			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				if (count < self.imgArray.count) {
 					UIButton *btn = self.imgArray[count];
@@ -604,13 +618,12 @@
 - (void)selectTap:(UITapGestureRecognizer *)gesture {
 	
 	if (self.btnArray.count == 0) return;
-
-//	CGPoint point = [gesture locationInView:self.sliderView];					// 1.
+	
+	//	CGPoint point = [gesture locationInView:self.sliderView];					// 1.
 	CGPoint point = [gesture locationInView:self];					// 2.
 	for (int i = 0; i < self.btnArray.count; i++) {
 		UIButton *btn = self.btnArray[i];
 		if (CGRectContainsPoint(btn.frame, point)) {
-			NSLog(@"==================================index: %zd", i);
 			[self imageSelected:i];
 			break;
 		}
@@ -644,26 +657,23 @@
 	for (UIButton *btn in self.btnArray) {
 		btn.hidden = YES;
 	}
-	for (UIButton *btn in self.imgArray) {
-//		btn.hidden = YES;
-	}
 }
 
 - (void)showAllBtn {
 	if (self.btnArray.count == 0) return;
-//	CGFloat btnY = 0;																				// 1.
+	//	CGFloat btnY = 0;																				// 1.
 	CGFloat btnY = CGRectGetMaxY(self.sliderView.frame) - self.sliderView.frame.size.height;		// 2.
 	CGFloat btnH = 20;
 	CGFloat btnW = 20;
 	CGFloat imgW = 40;
-	CGFloat x = self.sliderView.frame.size.width / (self.btnArray.count + 1);
+	CGFloat x = self.sliderView.frame.size.width / (self.btnArray.count + 1) - 4;
 	for (int i = 0; i < self.btnArray.count; i++) {
 		UIButton *btn = self.btnArray[i];
 		btn.hidden = NO;
-//		CGFloat btnX = (i+1) * x;												// 1.
-		CGFloat btnX = (i+1) * x + self.sliderView.frame.origin.x - 10;				// 2.
+		//		CGFloat btnX = (i+1) * x;												// 1.
+		CGFloat btnX = (i+1) * x + self.sliderView.frame.origin.x ;			// 2.
 		btn.frame = CGRectMake(btnX, btnY, btnW, btnH);
-
+		
 		UIButton *img = self.imgArray[i];
 		img.frame = CGRectMake(0, 0, 120, 67);
 		img.center = CGPointMake(btn.center.x, btn.center.y - 50);
@@ -700,22 +710,13 @@
 }
 
 - (NSString *)calcSeconds:(CGFloat)seconds {
-
+	
 	NSInteger hour = seconds / 3600;
 	NSInteger time = (NSInteger)seconds % 3600;
 	NSInteger min  = (NSInteger)time / 60;
 	NSInteger sec  = time % 60;
 	return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hour, (long)min, (long)sec];
 }
-//
-//- (NSString *)calcCMTime:(CMTime)time {
-//	
-//	NSInteger hour = seconds / 3600;
-//	NSInteger time = (NSInteger)seconds % 3600;
-//	NSInteger min  = (NSInteger)time / 60;
-//	NSInteger sec  = time % 60;
-//	return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hour, (long)min, (long)sec];
-//}
 
 - (void)fullScreen {
 	if ([self.delegate respondsToSelector:@selector(fullScreenDidSelected)]) {

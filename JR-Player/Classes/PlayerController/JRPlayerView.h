@@ -47,11 +47,4 @@
 
 - (void)removeTimer;
 
-// -- 屏幕方向
-- (void)getLeftScreen;
-
-- (void)getRightScreen;
-
-- (void)getPortraitScreen;
-
 @end

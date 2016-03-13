@@ -7,6 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C48DC88A1C951D8300A66C71 /* JRSoundView.m in Sources */ = {isa = PBXBuildFile; fileRef = C48DC8891C951D8300A66C71 /* JRSoundView.m */; };
+		C48DC88D1C958E9A00A66C71 /* LoaclViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C48DC88C1C958E9A00A66C71 /* LoaclViewController.m */; };
+		C48DC8901C959D5700A66C71 /* LiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C48DC88F1C959D5700A66C71 /* LiveViewController.m */; };
+		C48DC91C1C95AAE200A66C71 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC91B1C95AAE200A66C71 /* libbz2.tbd */; };
+		C48DC91E1C95AAE900A66C71 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC91D1C95AAE900A66C71 /* libiconv.tbd */; };
+		C48DC9201C95AAF300A66C71 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC91F1C95AAF300A66C71 /* AudioToolbox.framework */; };
+		C48DC9221C95AAFA00A66C71 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9211C95AAFA00A66C71 /* MediaToolbox.framework */; };
+		C48DC9241C95AB0000A66C71 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9231C95AB0000A66C71 /* MediaPlayer.framework */; };
+		C48DC9261C95AB0800A66C71 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9251C95AB0800A66C71 /* CoreGraphics.framework */; };
+		C48DC9281C95AB0F00A66C71 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9271C95AB0F00A66C71 /* UIKit.framework */; };
+		C48DC92A1C95AB1500A66C71 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9291C95AB1500A66C71 /* Foundation.framework */; };
+		C48DC92C1C95AB1C00A66C71 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC92B1C95AB1C00A66C71 /* OpenGLES.framework */; };
+		C48DC92E1C95AB2400A66C71 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC92D1C95AB2400A66C71 /* Accelerate.framework */; };
+		C48DC9301C95AB2900A66C71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC92F1C95AB2900A66C71 /* QuartzCore.framework */; };
+		C48DC9321C95AB2E00A66C71 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9311C95AB2E00A66C71 /* libz.tbd */; };
+		C48DC9341C95AB3600A66C71 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9331C95AB3600A66C71 /* CoreAudio.framework */; };
+		C48DC9361C95AB3D00A66C71 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9351C95AB3D00A66C71 /* libstdc++.tbd */; };
+		C48DC9381C95AB4300A66C71 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9371C95AB4300A66C71 /* AVFoundation.framework */; };
+		C48DC93A1C95AB6500A66C71 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC9391C95AB6500A66C71 /* CoreMedia.framework */; };
+		C48DC93C1C95AB6B00A66C71 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C48DC93B1C95AB6B00A66C71 /* VideoToolbox.framework */; };
 		C492CBA01C91188900D9D256 /* SlideCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C492CB9F1C91188900D9D256 /* SlideCollectionViewCell.m */; };
 		C492CBAA1C91603000D9D256 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C492CBA61C91603000D9D256 /* LICENSE */; };
 		C492CBAB1C91603000D9D256 /* MSWeakTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = C492CBA81C91603000D9D256 /* MSWeakTimer.m */; };
@@ -43,6 +63,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C48DC8881C951D8300A66C71 /* JRSoundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSoundView.h; sourceTree = "<group>"; };
+		C48DC8891C951D8300A66C71 /* JRSoundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSoundView.m; sourceTree = "<group>"; };
+		C48DC88B1C958E9A00A66C71 /* LoaclViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoaclViewController.h; sourceTree = "<group>"; };
+		C48DC88C1C958E9A00A66C71 /* LoaclViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoaclViewController.m; sourceTree = "<group>"; };
+		C48DC88E1C959D5700A66C71 /* LiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveViewController.h; sourceTree = "<group>"; };
+		C48DC88F1C959D5700A66C71 /* LiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveViewController.m; sourceTree = "<group>"; };
+		C48DC91B1C95AAE200A66C71 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
+		C48DC91D1C95AAE900A66C71 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		C48DC91F1C95AAF300A66C71 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		C48DC9211C95AAFA00A66C71 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
+		C48DC9231C95AB0000A66C71 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		C48DC9251C95AB0800A66C71 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C48DC9271C95AB0F00A66C71 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C48DC9291C95AB1500A66C71 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C48DC92B1C95AB1C00A66C71 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		C48DC92D1C95AB2400A66C71 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		C48DC92F1C95AB2900A66C71 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C48DC9311C95AB2E00A66C71 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		C48DC9331C95AB3600A66C71 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		C48DC9351C95AB3D00A66C71 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		C48DC9371C95AB4300A66C71 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C48DC9391C95AB6500A66C71 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		C48DC93B1C95AB6B00A66C71 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		C492CB9E1C91188900D9D256 /* SlideCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideCollectionViewCell.h; sourceTree = "<group>"; };
 		C492CB9F1C91188900D9D256 /* SlideCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideCollectionViewCell.m; sourceTree = "<group>"; };
 		C492CBA61C91603000D9D256 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -81,6 +124,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C48DC9281C95AB0F00A66C71 /* UIKit.framework in Frameworks */,
+				C48DC9321C95AB2E00A66C71 /* libz.tbd in Frameworks */,
+				C48DC91E1C95AAE900A66C71 /* libiconv.tbd in Frameworks */,
+				C48DC93C1C95AB6B00A66C71 /* VideoToolbox.framework in Frameworks */,
+				C48DC93A1C95AB6500A66C71 /* CoreMedia.framework in Frameworks */,
+				C48DC9381C95AB4300A66C71 /* AVFoundation.framework in Frameworks */,
+				C48DC9361C95AB3D00A66C71 /* libstdc++.tbd in Frameworks */,
+				C48DC9341C95AB3600A66C71 /* CoreAudio.framework in Frameworks */,
+				C48DC9301C95AB2900A66C71 /* QuartzCore.framework in Frameworks */,
+				C48DC92E1C95AB2400A66C71 /* Accelerate.framework in Frameworks */,
+				C48DC92C1C95AB1C00A66C71 /* OpenGLES.framework in Frameworks */,
+				C48DC92A1C95AB1500A66C71 /* Foundation.framework in Frameworks */,
+				C48DC9261C95AB0800A66C71 /* CoreGraphics.framework in Frameworks */,
+				C48DC9241C95AB0000A66C71 /* MediaPlayer.framework in Frameworks */,
+				C48DC9221C95AAFA00A66C71 /* MediaToolbox.framework in Frameworks */,
+				C48DC9201C95AAF300A66C71 /* AudioToolbox.framework in Frameworks */,
+				C48DC91C1C95AAE200A66C71 /* libbz2.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +161,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C48DC93E1C95ABD600A66C71 /* frameWork */ = {
+			isa = PBXGroup;
+			children = (
+				C48DC93B1C95AB6B00A66C71 /* VideoToolbox.framework */,
+				C48DC9391C95AB6500A66C71 /* CoreMedia.framework */,
+				C48DC9371C95AB4300A66C71 /* AVFoundation.framework */,
+				C48DC9351C95AB3D00A66C71 /* libstdc++.tbd */,
+				C48DC9331C95AB3600A66C71 /* CoreAudio.framework */,
+				C48DC9311C95AB2E00A66C71 /* libz.tbd */,
+				C48DC92F1C95AB2900A66C71 /* QuartzCore.framework */,
+				C48DC92D1C95AB2400A66C71 /* Accelerate.framework */,
+				C48DC92B1C95AB1C00A66C71 /* OpenGLES.framework */,
+				C48DC9291C95AB1500A66C71 /* Foundation.framework */,
+				C48DC9271C95AB0F00A66C71 /* UIKit.framework */,
+				C48DC9251C95AB0800A66C71 /* CoreGraphics.framework */,
+				C48DC9231C95AB0000A66C71 /* MediaPlayer.framework */,
+				C48DC9211C95AAFA00A66C71 /* MediaToolbox.framework */,
+				C48DC91F1C95AAF300A66C71 /* AudioToolbox.framework */,
+				C48DC91D1C95AAE900A66C71 /* libiconv.tbd */,
+				C48DC91B1C95AAE200A66C71 /* libbz2.tbd */,
+			);
+			name = frameWork;
+			sourceTree = "<group>";
+		};
 		C492CBA51C91603000D9D256 /* MSWeakTimer */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +228,7 @@
 		C4CA27E51C8FBC2B009B290D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C48DC93E1C95ABD600A66C71 /* frameWork */,
 				C4CA27EE1C8FBC2B009B290D /* Main.storyboard */,
 				C4CA27F11C8FBC2B009B290D /* Assets.xcassets */,
 				C4CA27F31C8FBC2B009B290D /* LaunchScreen.storyboard */,
@@ -184,8 +269,12 @@
 		C4CA281A1C8FBDD8009B290D /* MainControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C48DC88B1C958E9A00A66C71 /* LoaclViewController.h */,
+				C48DC88C1C958E9A00A66C71 /* LoaclViewController.m */,
 				C4CA281B1C8FBDD8009B290D /* ViewController.h */,
 				C4CA281C1C8FBDD8009B290D /* ViewController.m */,
+				C48DC88E1C959D5700A66C71 /* LiveViewController.h */,
+				C48DC88F1C959D5700A66C71 /* LiveViewController.m */,
 			);
 			path = MainControllers;
 			sourceTree = "<group>";
@@ -193,6 +282,8 @@
 		C4CA281D1C8FBDD8009B290D /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				C48DC8881C951D8300A66C71 /* JRSoundView.h */,
+				C48DC8891C951D8300A66C71 /* JRSoundView.m */,
 				C492CBA51C91603000D9D256 /* MSWeakTimer */,
 				C494ECCD1C906573003C6584 /* UINavigationController+Rotation.h */,
 				C494ECCE1C906573003C6584 /* UINavigationController+Rotation.m */,
@@ -350,6 +441,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C48DC8901C959D5700A66C71 /* LiveViewController.m in Sources */,
 				C4CA28211C8FBDD8009B290D /* ViewController.m in Sources */,
 				C4CA28641C8FC4A7009B290D /* PlayerViewController.m in Sources */,
 				C492CBAC1C91603000D9D256 /* README.md in Sources */,
@@ -360,6 +452,8 @@
 				C4CA286A1C8FD3AF009B290D /* JRControlView.m in Sources */,
 				C492CBAB1C91603000D9D256 /* MSWeakTimer.m in Sources */,
 				C4CA28221C8FBDD8009B290D /* AppDelegate.m in Sources */,
+				C48DC88D1C958E9A00A66C71 /* LoaclViewController.m in Sources */,
+				C48DC88A1C951D8300A66C71 /* JRSoundView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,7 +599,11 @@
 				INFOPLIST_FILE = "JR-Player/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "jerry.JR-Player";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JR-Player/Classes/Others/kxmovie/FFmpeg-iOS/lib",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "jerry.JR-Playe";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -519,7 +617,11 @@
 				INFOPLIST_FILE = "JR-Player/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "jerry.JR-Player";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JR-Player/Classes/Others/kxmovie/FFmpeg-iOS/lib",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "jerry.JR-Playe";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

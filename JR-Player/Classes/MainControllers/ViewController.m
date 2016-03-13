@@ -8,10 +8,14 @@
 
 #import "ViewController.h"
 #import "PlayerViewController.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "LoaclViewController.h"
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) UITableView	*tableView;
-@property (nonatomic, strong) NSArray		*dataSource;
+@property (nonatomic, strong) UITableView		*tableView;
+@property (nonatomic, strong) NSArray			*dataSource;
+@property (nonatomic, strong) NSMutableArray	*images;
 @end
 
 @implementation ViewController
@@ -25,7 +29,7 @@
 - (void)setUpView {
 	self.view.backgroundColor = [UIColor whiteColor];
 	
-	self.title = @"视频列表";
+	self.title = @"网络视频";
 	
 	self.tableView = ({
 		UITableView *tableView	= [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
@@ -39,6 +43,112 @@
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
 	self.tableView.frame = self.view.bounds;
+}
+
+#pragma mark - Load Source
+- (void)loadSource {
+	
+	ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+	
+	[library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
+						   usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+							   [group setAssetsFilter:[ALAssetsFilter allVideos]];
+							   
+							   [group enumerateAssetsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+													   options:0
+													usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+														
+														if (result) {
+//															NSLog(@"======= %@", result);
+															id representation = [result defaultRepresentation];
+															NSURL *url = [representation url];
+															AVAsset *asset = [AVAsset assetWithURL:url];
+															
+															NSLog(@"url: %@", url);
+														}
+													}];
+						   } failureBlock:^(NSError *error) {
+							   NSLog(@"error: %@", error);
+						   }];
+	
+}
+
+//获取相册的所有图片
+- (void)reloadImagesFromLibrary {
+	self.images = [[NSMutableArray alloc] init];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		
+		@autoreleasepool {
+			ALAssetsLibraryAccessFailureBlock failureblock = ^(NSError *myerror){
+				NSLog(@"相册访问失败 =%@", [myerror localizedDescription]);
+				if ([myerror.localizedDescription rangeOfString:@"Global denied access"].location!=NSNotFound) {
+					NSLog(@"无法访问相册.请在'设置->定位服务'设置为打开状态.");
+				}else{
+					NSLog(@"相册访问失败.");
+				}
+			};
+			
+			ALAssetsGroupEnumerationResultsBlock groupEnumerAtion = ^(ALAsset *result, NSUInteger index, BOOL *stop){
+				
+				NSLog(@"============ %@", result);
+				if (result != NULL) {
+					
+					if ([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypeVideo]) {
+						
+						NSString *urlstr=[NSString stringWithFormat:@"%@",result.defaultRepresentation.url];//图片的url
+						[self.images addObject:urlstr];
+						//NSLog(@"urlStr is %@",urlstr);
+						/*result.defaultRepresentation.fullScreenImage//图片的大图
+						 result.thumbnail                             //图片的缩略图小图
+						 //                    NSRange range1=[urlstr rangeOfString:@"id="];
+						 //                    NSString *resultName=[urlstr substringFromIndex:range1.location+3];
+						 //                    resultName=[resultName stringByReplacingOccurrencesOfString:@"&ext=" withString:@"."];//格式demo:123456.png
+						 */
+						
+						NSLog(@"----- %@", [result valueForProperty:ALAssetPropertyRepresentations]);
+						NSLog(@"AAA----- %@", [result valueForProperty:ALAssetPropertyDuration]);
+						NSLog(@"----- %@", [result valueForProperty:ALAssetPropertyOrientation]);
+						NSLog(@"name----- %@", [result valueForProperty:ALAssetsGroupPropertyPersistentID]);
+						NSLog(@"===== %@", [result defaultRepresentation].filename);
+					}
+				}
+			};
+			
+			ALAssetsLibraryGroupsEnumerationResultsBlock libraryGroupsEnumeration = ^(ALAssetsGroup* group, BOOL* stop){
+				
+				if (group == nil) {
+					
+				}
+				
+				if (group!=nil) {
+					[group setAssetsFilter:[ALAssetsFilter allVideos]];
+					NSString *g = [NSString stringWithFormat:@"%@",group];//获取相簿的组
+					NSLog(@"gg:%@",g);	//gg:ALAssetsGroup - Name:Camera Roll, Type:Saved Photos, Assets count:71
+					
+					NSString *g1 = [g substringFromIndex:16 ] ;
+					NSArray *arr = [[NSArray alloc] init];
+					arr			 = [g1 componentsSeparatedByString:@","];
+					NSString *g2 = [[arr objectAtIndex:0] substringFromIndex:5];
+					
+					if ([g2 isEqualToString:@"Camera Roll"]) {
+						g2=@"相机胶卷";
+					}
+					NSString *groupName=g2;//组的name
+					
+					NSLog(@"g1 --- %@", g1);
+					NSLog(@"g2 --- %@", g2);
+					NSLog(@"gg === %@", [group valueForProperty:ALAssetsGroupPropertyName]);
+					[group enumerateAssetsUsingBlock:groupEnumerAtion];
+				}
+			};
+			
+			ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+			[library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
+								   usingBlock:libraryGroupsEnumeration
+								 failureBlock:failureblock];
+		}
+		
+	});
 }
 
 #pragma mark - UITableViewDataSource

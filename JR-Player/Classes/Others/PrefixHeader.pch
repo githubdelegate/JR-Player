@@ -12,63 +12,12 @@
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
+#import <AVFoundation/AVFoundation.h>
+#import <UIKit/UIKit.h>
+
 #define SCREEN_W ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_H ([UIScreen mainScreen].bounds.size.height)
 #define CELL_H (SCREEN_W / 16 * 9 + 10)
+#define MAGIN_W ([UIScreen mainScreen].bounds.size.width / 3)
 
 #endif /* PrefixHeader_pch */
-
-
-//_dataSource = @[
-//				@{@"title":@"乔丹舞步，也挺经典的～帅～单挑伯德～",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df78e832359_wpd.jpg",
-//				  @"video":path},
-//				
-//				@{@"title":@"叫你撒尿在床上！打断你狗腿",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7c6cc9b56_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://wvideo.spriteapp.cn/video/2016/0309/56df7c6cc9b56_wpd.mp4"]},
-//				
-//				@{@"title":@"悟空的苦诉",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b80e07c4_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://wvideo.spriteapp.cn/video/2016/0309/56df7b80e07c4_wpd.mp4"]},
-//				
-//				@{@"title":@"她和这个男孩约好了，等病好了出院就一起来听演唱会，最后没有熬到这个时间就走了，男孩带着她的遗愿来听了演唱会！",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df758cd8dcf_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://wvideo.spriteapp.cn/video/2016/0309/56df758cd8dcf_wpd.mp4"]},
-//				
-//				@{@"title":@"别跑，抓到你就弄死你",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://wvideo.spriteapp.cn/video/2016/0309/56df7b64b4416_wpd.mp4"]},
-//				
-//				@{@"title":@"AAAAAAAA",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/14562919706254.mp4"]},
-//				
-//				@{@"title":@"BBBBBBB",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/1456117847747a_x264.mp4"]},
-//				
-//				@{@"title":@"CCCCCC",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/14525705791193.mp4"]},
-//				
-//				@{@"title":@"DDDDD",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/1456459181808howtoloseweight_x264.mp4"]},
-//				
-//				@{@"title":@"EEEEEE",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/1455968234865481297704.mp4"]},
-//				
-//				@{@"title":@"别跑，FFFFF",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/1455782903700jy.mp4"]},
-//				
-//				@{@"title":@"别跑GGGGGG",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/14564977406580.mp4"]},
-//				
-//				@{@"title":@"YYYYY",
-//				  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-//				  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/1456316686552The.mp4"]},
-//				];

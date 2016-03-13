@@ -8,6 +8,17 @@
 
 #import "JRPlayerView.h"
 #import "JRControlView.h"
+#import <MediaPlayer/MediaPlayer.h>
+
+// 滑动方向
+typedef NS_ENUM(NSInteger, CameraMoveDirection) {
+	kCameraMoveDirectionNone,
+	kCameraMoveDirectionUp,
+	kCameraMoveDirectionDown,
+	kCameraMoveDirectionRight,
+	kCameraMoveDirectionLeft,
+};
+CGFloat const gestureMinimumTranslation = 5.0 ;
 
 @interface JRPlayerView () <UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIButton					*playControl;		// 播放控制按钮
@@ -19,11 +30,18 @@
 @property (nonatomic, assign) BOOL						isAutoScreen;		//
 @property (nonatomic, strong) NSTimer					*closeTimer;		//
 
-@property (nonatomic, assign) CGRect			oldFrame;			// 小屏frame
+@property (nonatomic, assign) CGRect					oldFrame;			// 小屏frame
+@property (nonatomic, assign) CameraMoveDirection		direction;			// 方向
+@property (nonatomic, assign) CGPoint					location;			// 开始位置
+@property (nonatomic, assign) float						volume;				// 当前音量
+@property (nonatomic, assign) CGFloat					brightness;			// 当前亮度
+@property (nonatomic, assign) CGPoint					curretn;			// 实时位置
 @end
 
-#define STATUS_KEYPATH @"status"
-#define RATE_KEYPATH @"rate"
+#define STATUS_KEYPATH	@"status"
+#define RATE_KEYPATH	@"rate"
+#define LOAD_RANGE		@"loadedTimeRanges"
+
 static const NSString *PlayerItemStatusContext;
 static const NSString *PlayerItemRateContext;
 @implementation JRPlayerView
@@ -55,8 +73,8 @@ static const NSString *PlayerItemRateContext;
 		self.backgroundColor = [UIColor blackColor];
 		[self prepareToPlay];
 		[self addControlView];
-		[self addGesture];
-		
+		[self addPanGesture];
+		[self addTapGesture];
 	}
 	
 	return self;
@@ -106,7 +124,7 @@ static const NSString *PlayerItemRateContext;
 	// 2. 创建 AVPlayerItem
 	self.playerItem = [AVPlayerItem playerItemWithAsset:self.asset          // 2
 						   automaticallyLoadedAssetKeys:keys];
-
+	
 	// 3. 监控播放状态
 	[self.playerItem addObserver:self                                       // 3
 					  forKeyPath:STATUS_KEYPATH
@@ -121,12 +139,18 @@ static const NSString *PlayerItemRateContext;
 					 options:0
 					 context:&PlayerItemRateContext];
 	
+	[self.playerItem addObserver:self
+					  forKeyPath:LOAD_RANGE
+						 options:NSKeyValueObservingOptionNew context:nil];
+	
 	// 5. 添加到 View
 	[(AVPlayerLayer *) [self layer] setPlayer:self.player];
 	
 	if (self.appearBtn) {
 		[self.appearBtn removeFromSuperview];
 	}
+	
+	self.player.volume = [self getSystemVolume];
 	
 	[self play];
 	[self setView];
@@ -136,9 +160,7 @@ static const NSString *PlayerItemRateContext;
 					  ofObject:(id)object
 						change:(NSDictionary *)change
 					   context:(void *)context {
-	
-	NSLog(@"notifacation: %@   %@", keyPath, change);
-	
+
 	if ([change[@"kind"] isEqualToNumber:[NSNumber numberWithInteger:1]]) {
 		
 		if (self.imageLayer) {
@@ -147,22 +169,19 @@ static const NSString *PlayerItemRateContext;
 		
 		if (self.smallControlView) {
 			[self.smallControlView addControlBtn];
-			NSLog(@"===============xxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		}
 	}
+	
+	if ([keyPath isEqualToString:LOAD_RANGE]) {
+		
+	}
+	
 	[self updateControlView];
 }
 
 - (void)setView {
 	
 	// 1. 播放控制
-//	self.playControl = [UIButton buttonWithType:UIButtonTypeContactAdd];
-//	self.playControl = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-//	[self.playControl setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-//	[self.playControl setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateHighlighted];
-//	[self addSubview:self.playControl];
-//	[self.playControl addTarget:self action:@selector(playCont) forControlEvents:UIControlEventTouchUpInside];
-	
 	// 2. 菊花
 	self.activity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
 	[self addSubview:self.activity];
@@ -209,8 +228,140 @@ static const NSString *PlayerItemRateContext;
 	}
 }
 
+#pragma mark - addPanGesture
+
+- (void)addPanGesture {
+	UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self
+																		  action:@selector(panAction:)];
+	
+	[self addGestureRecognizer:pan];
+}
+
+- (void)panAction:(UIPanGestureRecognizer *)recognizer {
+	
+	if (recognizer.state == UIGestureRecognizerStateBegan) {
+		self.direction	= kCameraMoveDirectionNone;								// 无方向
+		self.location	= [recognizer locationInView:self];						// 开始滑动位置
+		self.volume		= self.player.volume;								// 获取当前音量
+		self.brightness = [UIScreen mainScreen].brightness;						// 获取当前亮度
+	}
+	
+	CGPoint translation = [recognizer translationInView:self];		// 事实移动位置 增量
+	self.direction	= [self determineCameraDirectionIfNeeded:translation];
+	self.curretn	= [recognizer locationInView:self];
+	
+	// 亮度/声音调节
+	if (self.direction == 1 || self.direction == 2) {
+		
+		// 亮度
+		if (self.location.x <= MAGIN_W) {
+			
+			float currentBrightness = self.brightness + ((self.location.y - self.curretn.y) / self.frame.size.height);
+			if (currentBrightness <= 0 ) {
+				currentBrightness = 0;
+			} else if(currentBrightness >= 1) {
+				currentBrightness = 1;
+			}
+			[UIScreen mainScreen].brightness = currentBrightness;
+			// 声音
+		} else if (self.location.x >= self.frame.size.width - MAGIN_W) {
+			
+			float currentVolume = self.volume + ((self.location.y - self.curretn.y) / self.frame.size.height);
+			if (currentVolume <= 0 ) {
+				currentVolume = 0;
+			} else if(currentVolume >= 1) {
+				currentVolume = 1;
+			}
+			[self.player setVolume:currentVolume];
+			
+			[self setSystemVolme:currentVolume];
+		}
+		
+		// 进度调节
+	} else if(self.direction == 3 || self.direction == 4) {
+		//		translation.x	移动偏移量
+		//		velocity.x		移动速度
+		CGFloat time		= 300;
+		CGFloat speed		= time / self.frame.size.width;			// 移动快进速度
+
+		long add			=  (long)(translation.x) *speed;
+		
+		CMTime currentTime	= self.player.currentTime;
+		CMTime addTime		= CMTimeMake(add, 1);
+		CMTime newTime		= CMTimeAdd(currentTime, addTime);
+		NSLog(@"------------------new: %@ - %zd", [NSValue valueWithCMTime:newTime], self.direction);
+		if (recognizer.state == UIGestureRecognizerStateEnded) {
+
+			if (CMTimeRangeContainsTime(CMTimeRangeMake(kCMTimeZero, self.playerItem.duration), newTime)) {
+				[self.player seekToTime:newTime completionHandler:^(BOOL finished) {
+				}];
+			} else if (newTime.value <=0) {
+				[self.player seekToTime:kCMTimeZero completionHandler:^(BOOL finished) {
+				}];
+			} else if ((newTime.value / newTime.timescale) >= (self.playerItem.duration.value / self.playerItem.duration.timescale)) {
+				[self.player seekToTime:self.playerItem.duration completionHandler:^(BOOL finished) {
+				}];
+			}
+		}
+	}
+}
+
+// 获取方向
+- ( CameraMoveDirection )determineCameraDirectionIfNeeded:( CGPoint )translation {
+	
+	if (self.direction != kCameraMoveDirectionNone)
+		return self.direction;
+	
+	if (fabs(translation.x) > gestureMinimumTranslation) {
+		
+		BOOL gestureHorizontal = NO;
+		if (translation.y == 0.0 )
+			gestureHorizontal = YES;
+		else
+			gestureHorizontal = (fabs(translation.x / translation.y) > 5.0 );
+		if (gestureHorizontal) {
+			
+			if (translation.x > 0.0 )
+				return kCameraMoveDirectionRight;
+			else
+				return kCameraMoveDirectionLeft;
+		}
+	}
+	else if (fabs(translation.y) > gestureMinimumTranslation)
+		
+	{
+		BOOL gestureVertical = NO;
+		if (translation.x == 0.0 )
+			gestureVertical = YES;
+		else
+			gestureVertical = (fabs(translation.y / translation.x) > 5.0 );
+		if (gestureVertical)
+			
+		{
+			if (translation.y > 0.0 )
+				
+				return kCameraMoveDirectionDown;
+			else
+				return kCameraMoveDirectionUp;
+		}
+	}
+	return self.direction;
+}
+
+- (CGFloat)getSystemVolume {
+	MPMusicPlayerController *musicPlayer;
+	musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+	return musicPlayer.volume;
+}
+
+- (void)setSystemVolme:(float)currentVolume {
+	MPMusicPlayerController *musicPlayer;
+	musicPlayer = [MPMusicPlayerController applicationMusicPlayer];
+	[musicPlayer setVolume:currentVolume];
+}
+
 #pragma maek - Private Methond
-- (void)addGesture {
+- (void)addTapGesture {
 	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
 																		  action:@selector(sreenControl)];
 	tap.delegate = self;
@@ -218,7 +369,7 @@ static const NSString *PlayerItemRateContext;
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-
+	
 	if ([NSStringFromClass([touch.view class]) isEqualToString:@"UIImageView"]
 		|| [NSStringFromClass([touch.view class]) isEqualToString:@"UIView"]
 		|| [NSStringFromClass([touch.view class]) isEqualToString:@"UISlider"]) {
@@ -327,6 +478,7 @@ static const NSString *PlayerItemRateContext;
 - (void)dealloc {
 	[self.playerItem removeObserver:self forKeyPath:STATUS_KEYPATH];
 	[self.player removeObserver:self forKeyPath:RATE_KEYPATH];
+	[self.playerItem removeObserver:self forKeyPath:LOAD_RANGE];
 }
 
 + (Class)layerClass {                                                       // 2
