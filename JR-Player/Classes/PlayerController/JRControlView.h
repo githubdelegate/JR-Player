@@ -26,4 +26,6 @@
 
 - (void)addControlBtn;
 
+- (void)hiddenAllImageBtn;
+
 @end

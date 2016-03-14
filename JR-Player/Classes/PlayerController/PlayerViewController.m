@@ -140,6 +140,8 @@
 
 - (void)statusBarOrientationChange:(NSNotification *)notification {
 
+	NSLog(@"================================================= ");
+	
 	// 设备方向
 	UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
 	

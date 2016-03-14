@@ -210,10 +210,15 @@ static const NSString *PlayerItemRateContext;
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
+
 	self.playControl.center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
 	self.activity.center	= CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
 	self.appearBtn.center	= CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
 	self.imageLayer.frame = self.bounds;
+	
+	if ([UIDevice currentDevice].orientation == UIDeviceOrientationPortrait) {
+		[self.smallControlView hiddenAllImageBtn];
+	}
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -233,7 +238,7 @@ static const NSString *PlayerItemRateContext;
 - (void)addPanGesture {
 	UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self
 																		  action:@selector(panAction:)];
-	
+	pan.delegate = self;
 	[self addGestureRecognizer:pan];
 }
 
@@ -281,6 +286,12 @@ static const NSString *PlayerItemRateContext;
 	} else if(self.direction == 3 || self.direction == 4) {
 		//		translation.x	移动偏移量
 		//		velocity.x		移动速度
+		
+		NSLog(@"==== %@", NSStringFromCGPoint(self.curretn));
+		if (self.curretn.y >= (self.bounds.size.height - 30)) {
+			return;
+		}
+		
 		CGFloat time		= 300;
 		CGFloat speed		= time / self.frame.size.width;			// 移动快进速度
 
@@ -289,7 +300,6 @@ static const NSString *PlayerItemRateContext;
 		CMTime currentTime	= self.player.currentTime;
 		CMTime addTime		= CMTimeMake(add, 1);
 		CMTime newTime		= CMTimeAdd(currentTime, addTime);
-		NSLog(@"------------------new: %@ - %zd", [NSValue valueWithCMTime:newTime], self.direction);
 		if (recognizer.state == UIGestureRecognizerStateEnded) {
 
 			if (CMTimeRangeContainsTime(CMTimeRangeMake(kCMTimeZero, self.playerItem.duration), newTime)) {
@@ -369,7 +379,7 @@ static const NSString *PlayerItemRateContext;
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-	
+
 	if ([NSStringFromClass([touch.view class]) isEqualToString:@"UIImageView"]
 		|| [NSStringFromClass([touch.view class]) isEqualToString:@"UIView"]
 		|| [NSStringFromClass([touch.view class]) isEqualToString:@"UISlider"]) {

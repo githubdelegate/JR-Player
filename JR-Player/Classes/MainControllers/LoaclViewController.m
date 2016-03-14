@@ -95,7 +95,6 @@
 }
 
 #pragma mark - UIAlertViewDelegate
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	// 取消
 	if (buttonIndex == 0) {
@@ -148,12 +147,11 @@
 }
 
 #pragma mark - UITableViewDelegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	PlayerViewController *player = [[PlayerViewController alloc] init];
+	player.hidesBottomBarWhenPushed = YES;
 	player.video = self.localVideos[indexPath.row];
-	NSLog(@"====== %@", self.localVideos[indexPath.row]);
 	[self.navigationController pushViewController:player animated:YES];
 }
 
@@ -181,6 +179,11 @@
 	[super viewDidAppear:animated];
 	[self examineAtionStatus];
 	self.navigationController.navigationBar.alpha = 1.0;
+}
+
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	self.tableView.frame = self.view.bounds;
 }
 
 #pragma mark - Private Methond

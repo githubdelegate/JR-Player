@@ -659,6 +659,13 @@
 	}
 }
 
+- (void)hiddenAllImageBtn {
+	if (self.imgArray.count == 0) return;
+	for (UIButton *btn in self.imgArray) {
+		btn.hidden = YES;
+	}
+}
+
 - (void)showAllBtn {
 	if (self.btnArray.count == 0) return;
 	//	CGFloat btnY = 0;																				// 1.

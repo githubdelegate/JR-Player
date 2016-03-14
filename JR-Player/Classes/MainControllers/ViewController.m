@@ -175,6 +175,7 @@
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	PlayerViewController *player = [[PlayerViewController alloc] init];
+	player.hidesBottomBarWhenPushed = YES;
 	player.video = self.dataSource[indexPath.row];
 	[self.navigationController pushViewController:player animated:YES];
 }
