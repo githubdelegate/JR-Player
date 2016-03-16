@@ -11,3 +11,10 @@
 @interface UINavigationController (Rotation)
 
 @end
+
+@interface UITabBarController (autoRotate)
+
+-(BOOL)shouldAutorotate;
+- (NSUInteger)supportedInterfaceOrientations;
+
+@end

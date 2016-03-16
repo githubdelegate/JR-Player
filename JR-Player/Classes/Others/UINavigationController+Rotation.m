@@ -21,3 +21,14 @@
 	return [[self.viewControllers lastObject] preferredInterfaceOrientationForPresentation];
 }
 @end
+
+@implementation UITabBarController (autoRotate)
+
+- (BOOL)shouldAutorotate {
+	return [self.selectedViewController shouldAutorotate];
+}
+- (NSUInteger)supportedInterfaceOrientations {
+	return [self.selectedViewController supportedInterfaceOrientations];
+}
+
+@end

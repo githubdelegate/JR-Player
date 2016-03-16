@@ -215,31 +215,31 @@
 					
 					@{@"title":@"视频一",
 					  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-					  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/14562919706254.mp4"]},
-	  
+					  @"video":[NSURL URLWithString:@"http://7rfkz6.com1.z0.glb.clouddn.com/480p_20160229_T2.mp4"]},
+					
 					@{@"title":@"视频二",
 					  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-					  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/1456117847747a_x264.mp4"]},
-	  
+					  @"video":[NSURL URLWithString:@"http://7rfkz6.com1.z0.glb.clouddn.com/%20480p_160111_Remixmini.mp4"]},
+					
 					@{@"title":@"视频三",
 					  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-					  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/14525705791193.mp4"]},
-	  
+					  @"video":[NSURL URLWithString:@"http://7rfkz6.com1.z0.glb.clouddn.com/480p_150930_iPhone6s.mp4"]},
+					
 					@{@"title":@"视频四",
 					  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-					  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/1456459181808howtoloseweight_x264.mp4"]},
-	  
+					  @"video":[NSURL URLWithString:@"http://7rfkz6.com1.z0.glb.clouddn.com/480p_150902_jianguoshouji.mp4"]},
+					
 					@{@"title":@"视频五",
 					  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-					  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/1455968234865481297704.mp4"]},
-	  
+					  @"video":[NSURL URLWithString:@"http://7rfkz6.com1.z0.glb.clouddn.com/480p_150814_oneplus2.mp4"]},
+					
 					@{@"title":@"视频六",
 					  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-					  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/1455782903700jy.mp4"]},
-	  
+					  @"video":[NSURL URLWithString:@"http://5069.vod.myqcloud.com/5069_492c1d36d8d111e58e6e3b72aa110d6e.f20.mp4"]},
+					
 					@{@"title":@"视频七",
 					  @"image":@"http://wimg.spriteapp.cn/picture/2016/0309/56df7b64b4416_wpd.jpg",
-					  @"video":[NSURL URLWithString:@"http://baobab.wdjcdn.com/14564977406580.mp4"]},
+					  @"video":[NSURL URLWithString:@"http://7rfkz6.com1.z0.glb.clouddn.com/480p_20150528_nubiaz9.mp4"]},
 					
 					];
 	

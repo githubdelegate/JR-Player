@@ -376,7 +376,7 @@
 				TargetAttributes = {
 					C4CA27E11C8FBC2B009B290D = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 98N2G2QT82;
+						DevelopmentTeam = B5SJ8JYP65;
 					};
 					C4CA27FA1C8FBC2B009B290D = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -603,7 +603,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/JR-Player/Classes/Others/kxmovie/FFmpeg-iOS/lib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jerry.JR-Playe";
+				PRODUCT_BUNDLE_IDENTIFIER = "jerry.JR-Playea";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -621,7 +621,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/JR-Player/Classes/Others/kxmovie/FFmpeg-iOS/lib",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jerry.JR-Playe";
+				PRODUCT_BUNDLE_IDENTIFIER = "jerry.JR-Playea";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
