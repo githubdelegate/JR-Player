@@ -10,7 +10,7 @@
 
 ##二、播放效果
 1. [视频地址](http://v.youku.com/v_show/id_XMTQ5Njc5Mjc1Mg==.html?from=y1.7-1.2)
- ![(App01)](http://v.youku.com/v_show/id_XMTQ5Njc5Mjc1Mg==.html?from=y1.7-1.2)
+ 
 
 2. [效果1](http://images2015.cnblogs.com/blog/757453/201603/757453-20160316181052099-902171575.gif)
 3. ![(App01)](http://images2015.cnblogs.com/blog/757453/201603/757453-20160316181052099-902171575.gif)
